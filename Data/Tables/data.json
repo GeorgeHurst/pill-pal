@@ -1,0 +1,32 @@
+{
+  "userPreferences": {
+    "activeHoursAM": "07:30",
+    "activeHoursPM": "21:30",
+    "theme": "dark"
+  },
+  "pills": [
+    {
+      "name": "Paracetamol",
+      "dosePerPill": 200,
+      "pillsPerDose": 1,
+      "dosesPerDay": 1,
+      "minHoursBetweenDoses": 13
+    },
+    {
+      "name": "ibroprofen",
+      "dosePerPill": 750,
+      "pillsPerDose": 1,
+      "dosesPerDay": 2,
+      "minHoursBetweenDoses": 8
+    },
+    {
+      "name": "piriton",
+      "dosePerPill": 250,
+      "pillsPerDose": 1,
+      "dosesPerDay": 1,
+      "minHoursBetweenDoses": 24
+    },
+    {}
+  ],
+  "schedule": []
+}
