@@ -1,4 +1,5 @@
 from Pharmacist.pharmacist import *
+from .settings import pharmacist_port, debug
 
 if __name__ == "__main__":
-    api.run(debug=True, port=5000)
+    api.run(debug=debug, port=pharmacist_port)

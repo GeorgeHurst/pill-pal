@@ -16,6 +16,17 @@ class DataManager:
             return json.load(f)
      
      
+    def load_backup(self, type):
+    
+        _file = f'{self.FILE_PATH}/Backups/{type}_backup.json'
+        
+        if not os.path.exists(_file):
+            return {"error": "Invalid type!"}
+        
+        with open(_file, 'r') as f:
+            return json.load(f)
+     
+     
     # Save data to the desired table in data store   
     def save(self, type, data):
         
@@ -32,3 +43,11 @@ class DataManager:
         
         with open(_file, 'w') as file:
             return json.dump(data, file, indent=4)
+        
+        
+    # Retrieve passcode hash
+    def get_passcodehash(self):
+        _file = "Data/passcode.txt"
+        
+        with open(_file, 'r') as f:
+            return f.read()
