@@ -32,3 +32,10 @@ def check_passcode():
         return jsonify({'success': True})
     else:
         return jsonify({'success': False})
+    
+@api.route(DEFAULT_ROUTE+"/get/config", methods=['GET'])
+def getconfig():
+    config = dm.get_config()
+    if not config:
+        return jsonify({'error': 'Configuration not found'}), 404
+    return jsonify(config)

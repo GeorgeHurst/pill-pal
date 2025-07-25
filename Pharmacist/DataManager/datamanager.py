@@ -1,4 +1,5 @@
 import json, os
+from ServerManagers.settings import pharmacist_port, ui_port, debug, host
 
 class DataManager:
     def __init__(self):
@@ -51,3 +52,11 @@ class DataManager:
         
         with open(_file, 'r') as f:
             return f.read()
+        
+    def get_config(self):
+        return {
+            "pharmacist_port": pharmacist_port,
+            "ui_port": ui_port,
+            "debug": debug,
+            "host": host
+        }
