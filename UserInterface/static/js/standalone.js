@@ -148,7 +148,7 @@ function loadData() {
 
 
 async function loadDataByType(type) {
-    const response = await fetch(`http://localhost:5000/load_data/${type}`);
+    const response = await fetch(`http://localhost:5000/api/get/${type}`);
     const data = await response.json();
     return data;
 }

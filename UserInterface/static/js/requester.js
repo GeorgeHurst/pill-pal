@@ -6,7 +6,7 @@ class Requester {
     /*********STANDALONE ENDPOINTS***********/
     async loadDataByType(type) {
         if (!type) return
-        return fetch(this.api + `/load_data/${type}`)
+        return fetch(this.api + `/api/get/${type}`)
             .then(response => {
                 if (!response.ok) {
                     console.error(`Couldn't load data of type - ${type}: Network response was not ok`);
@@ -19,7 +19,7 @@ class Requester {
 
     async saveDataByType(type, data) {
         if (!type || !data || data.length == 0) return
-        return fetch(this.api + `/save_data/${type}`,
+        return fetch(this.api + `/api/set/${type}`,
         {
             method: 'POST',
             headers: {
