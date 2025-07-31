@@ -3,8 +3,8 @@ let pills, global_schedule;
 const requester = new Requester();
 
 // async function main() {
-//     pills = await loadDataByType("pills")
-//     global_schedule = await loadDataByType("schedule");
+//     pills = await getDataByType("pills")
+//     global_schedule = await getDataByType("schedule");
 // }
 
 // main();
@@ -21,8 +21,8 @@ async function generateSchedule() {
         return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
     };
 
-    const user_preferences = await loadDataByType("user_preferences");
-    const pill_data = await loadDataByType("pills")
+    const user_preferences = await requester.getDataByType("user_preferences");
+    const pill_data = await requester.getDataByType("pills")
 
     const start = toMinutes(user_preferences.ActiveHoursAM);
     const end = toMinutes(user_preferences.ActiveHoursPM);
@@ -101,31 +101,12 @@ async function generateSchedule() {
         }
     }
 
-    
-    
     schedule = groupedSchedule.map(entry => ({
         time: toTimeString(entry.time),
         pills: entry.pills,
         taken: entry.taken
     }))
-    
-    // fetch(`http://localhost:5000/save_backup/schedule`,
-    //     {
-    //         method: 'POST'
-    //     })
-    //     .then(response => { return response.json(); })
 
-
-    // fetch(`http://localhost:5000/save_data/schedule`,
-    //     {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify(schedule)
-    //     })
-    //     .then(response => { return response.json(); })
-    
     await requester.saveDataByType("schedule", schedule)
     await requester.saveDataByType("failed_schedule", skippedPills)
     
@@ -140,18 +121,18 @@ async function generateSchedule() {
 
 }
   
-function loadData() {
-    fetch('http://localhost:5000/load_data/pills')
-    .then(response => response.json())
-    .then(data => {fillSlots(data)});
-}
+// function loadData() {
+//     fetch('http://localhost:5000/load_data/pills')
+//     .then(response => response.json())
+//     .then(data => {fillSlots(data)});
+// }
 
 
-async function loadDataByType(type) {
-    const response = await fetch(`http://localhost:5000/api/get/${type}`);
-    const data = await response.json();
-    return data;
-}
+// async function getDataByType(type) {
+//     const response = await fetch(`http://localhost:5000/api/get/${type}`);
+//     const data = await response.json();
+//     return data;
+// }
 
 
 
@@ -159,7 +140,10 @@ function getData(_data) {
    data = _data;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async() => {
+
+    await fillSlots();
+
     const editBtn = document.getElementById('edit_btn');
     const pillDiv = document.getElementById('pill_div');
 
@@ -176,11 +160,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // This needs to be made specific for each info button
     document.querySelectorAll('.info_btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            let id = parseInt(btn.id[btn.id.length - 1]);
-            alert(`Pill Name: ${capitaliseFirstLetter(pills[id].name)}\nDose per pill: ${pills[id].dosePerPill}mg\nPills per dose: ${pills[id].pillsPerDose}\nDoses per day: ${pills[id].dosesPerDay}\nMin time between doses: ${pills[id].minHoursBetweenDoses}hrs`);
-
-        });
+        let pills = requester.getDataByType('pills').then(()=>{
+            btn.addEventListener('click', () => {
+                let id = parseInt(btn.id[btn.id.length - 1]);
+                console.log(pills[id]);
+                alert(`Pill Name: ${capitaliseFirstLetter(pills[id].name)}\nDose per pill: ${pills[id].dosePerPill}mg\nPills per dose: ${pills[id].pillsPerDose}\nDoses per day: ${pills[id].dosesPerDay}\nMin time between doses: ${pills[id].minHoursBetweenDoses}hrs`);
+    
+            });
+        })
     });
 
     document.querySelectorAll('.edit_pill_btn').forEach(btn => {
@@ -211,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(response => response.json())
                 .then(result => {
                     if (result.success) {
-                        loadData();
+                        // loadData();
                         console.log(`Slot ${i} cleared successfully`);
                     } else {
                         console.error("Remove failed:", result.error);
@@ -253,8 +240,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 })
 
-
-function fillSlots(data) {
+async function fillSlots() {
+    let data = await requester.getDataByType("Pills")
     for (const pillIndex in data) {
         let name = data[pillIndex].name;
         document.getElementById(`pill_span${pillIndex}`).innerText = (name) ? capitaliseFirstLetter(name) : "FREE SLOT";

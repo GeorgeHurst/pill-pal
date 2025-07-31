@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit pill</title>
 
-    <link rel="stylesheet" href="../static/edit_pill.css">
+    <link rel="stylesheet" href="../static/css/edit_pill.css">
 </head>
 <body>
     <div id="pill-data" data-slot-id="{{ slot_id }}"></div>
@@ -13,7 +13,7 @@
     <div class="edit_form">
         <h2>PillPal Slot {{ slot_id + 1 }}</h2>
         <p>🛈 It is your responsibility to ensure that the information entered here matches what is inside your PillPal.</p>
-        <!-- <form action="http://127.0.0.1:5000/api/set/pill/{{ slot_id }}" method="POST"> -->
+        <form action="/save_pill/{{ slot_id }}" method="POST">
     
             <label for="name">Pill Name:</label>
             <input type="text" id="name" name="name" value="" required>
@@ -30,15 +30,13 @@
             <label for="minHoursBetweenDoses">Minimum Hours Between Doses:</label>
             <input type="number" id="minHoursBetweenDoses" name="minHoursBetweenDoses" value="" required>
     
-            <!-- <button type="submit">Save Pill Configuration</button> -->
-             <button type="button" id="pillSubmitButton">Save Pill Configuration</button>
-        <!-- </form> -->
+            <button type="submit">Save Pill Configuration</button>
+        </form>
     </div>
 
 
 
 
-    <script src="../static/requester.js"></script>
-    <script src="../static/edit_pill.js"></script>
+    <script src="../static/js/edit_pill.js"></script>
 </body>
 </html>

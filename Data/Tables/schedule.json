@@ -1,54 +1,16 @@
 [
-  {
-    "time": "09:30",
-    "pills": [
-      {
-        "name": "paracetamol",
-        "amount": 1
-      },
-      {
-        "name": "ibroprofen",
-        "amount": 1
-      },
-      {
-        "name": "piriton",
-        "amount": 1
-      },
-      {
-        "name": "water",
-        "amount": 1
-      }
-    ],
-    "taken": false
-  },
-  {
-    "time": "11:30",
-    "pills": [
-      {
-        "name": "water",
-        "amount": 1
-      }
-    ],
-    "taken": false
-  },
-  {
-    "time": "13:30",
-    "pills": [
-      {
-        "name": "water",
-        "amount": 1
-      }
-    ],
-    "taken": false
-  },
-  {
-    "time": "17:30",
-    "pills": [
-      {
-        "name": "ibroprofen",
-        "amount": 1
-      }
-    ],
-    "taken": false
-  }
+    {
+        "time": "09:30",
+        "pills": [
+            {
+                "name": "paracetamol",
+                "amount": "11"
+            },
+            {
+                "name": "piriton",
+                "amount": "11"
+            }
+        ],
+        "taken": false
+    }
 ]
