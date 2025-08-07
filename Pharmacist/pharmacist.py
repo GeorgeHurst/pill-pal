@@ -20,7 +20,7 @@ def getdata(type):
 @api.route(DEFAULT_ROUTE+"/get/pill/<slot>", methods=['GET'])
 def getpill(slot):
     data = dm.load("pills")
-    return data[int(slot)-1]
+    return data[int(slot)] # <- -1 maybe
 
 @api.route(DEFAULT_ROUTE+"/get/backup/<type>", methods=['GET'])
 def getbackup(type):
@@ -47,10 +47,13 @@ def setdata(type):
 
 @api.route(DEFAULT_ROUTE+"/set/pill/<slot>", methods=['POST', 'OPTIONS'])
 def setpill(slot):
+    if request.method == 'OPTIONS':
+        return '', 204
     new_data = request.get_json()
     pill_data = dm.load("pills")
     pill_data[int(slot)] = new_data
-    return dm.save("pills", pill_data)
+    dm.save("pills", pill_data)
+    return jsonify({"success": True}), 200
 
 
 
@@ -73,4 +76,3 @@ def check_passcode():
         return jsonify({'success': False})
     
 ##########################################################
-    

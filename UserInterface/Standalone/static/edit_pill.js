@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', async() => {
 
     let data = await requester.getPillDataBySlot(slotId);
 
+    console.log("DATA: ",data);
+
     nameInput.value = data.name ? data.name : "";
     dosePerPillInput.value = data.dosePerPill;
     pillsPerDoseInput.value = data.pillsPerDose;
@@ -29,6 +31,10 @@ document.addEventListener('DOMContentLoaded', async() => {
             "pillsPerDose": pillsPerDoseInput.value
         }
         requester.savePillSlotData(slotId, newPillData)
+
+        window.location = "/";
     })
+
+
 })
 

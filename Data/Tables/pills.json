@@ -1,16 +1,16 @@
 [
     {
+        "dosePerPill": "200",
+        "dosesPerDay": "1",
+        "minHoursBetweenDoses": "13",
         "name": "paracetamol",
-        "dosePerPill": 200,
-        "pillsPerDose": 1,
-        "dosesPerDay": 1,
-        "minHoursBetweenDoses": 13
+        "pillsPerDose": "1"
     },
     {
         "dosePerPill": "200",
         "dosesPerDay": "1",
         "minHoursBetweenDoses": "13",
-        "name": "paracetamol",
+        "name": "george",
         "pillsPerDose": "1"
     },
     {

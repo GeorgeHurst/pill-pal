@@ -160,14 +160,12 @@ document.addEventListener('DOMContentLoaded', async() => {
 
     // This needs to be made specific for each info button
     document.querySelectorAll('.info_btn').forEach(btn => {
-        let pills = requester.getDataByType('pills').then(()=>{
-            btn.addEventListener('click', () => {
-                let id = parseInt(btn.id[btn.id.length - 1]);
-                console.log(pills[id]);
-                alert(`Pill Name: ${capitaliseFirstLetter(pills[id].name)}\nDose per pill: ${pills[id].dosePerPill}mg\nPills per dose: ${pills[id].pillsPerDose}\nDoses per day: ${pills[id].dosesPerDay}\nMin time between doses: ${pills[id].minHoursBetweenDoses}hrs`);
-    
-            });
-        })
+        btn.addEventListener('click', async () => {
+            const pills = await requester.getDataByType('pills');
+            let id = parseInt(btn.id[btn.id.length - 1]);
+            console.log(pills[id]);
+            alert(`Pill Name: ${capitaliseFirstLetter(pills[id].name)}\nDose per pill: ${pills[id].dosePerPill}mg\nPills per dose: ${pills[id].pillsPerDose}\nDoses per day: ${pills[id].dosesPerDay}\nMin time between doses: ${pills[id].minHoursBetweenDoses}hrs`);
+        });
     });
 
     document.querySelectorAll('.edit_pill_btn').forEach(btn => {

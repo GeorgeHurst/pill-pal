@@ -33,7 +33,7 @@ class Requester {
     }
 
     async getPillDataBySlot(slot) {
-        if (parseInt(slot) < 1 || parseInt(slot) > 4) return
+        if (parseInt(slot) < 0 || parseInt(slot) > 3) return
         return fetch(this.api + `/get/pill/${slot}`)
             .then(response => {
                 if (!response.ok) {
