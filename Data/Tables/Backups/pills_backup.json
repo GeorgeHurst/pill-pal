@@ -10,21 +10,15 @@
         "dosePerPill": "200",
         "dosesPerDay": "1",
         "minHoursBetweenDoses": "13",
-        "name": "paracetamol",
+        "name": "fexofenadine",
         "pillsPerDose": "1"
-    },
-    {
-        "name": "piriton",
-        "dosePerPill": 250,
-        "pillsPerDose": 1,
-        "dosesPerDay": 1,
-        "minHoursBetweenDoses": 24
     },
     {
         "dosePerPill": "250",
-        "dosesPerDay": "1",
-        "minHoursBetweenDoses": "24",
-        "name": "piriton",
-        "pillsPerDose": "1"
-    }
+        "dosesPerDay": "3",
+        "minHoursBetweenDoses": "4",
+        "name": "Ibroprofen",
+        "pillsPerDose": "2"
+    },
+    {}
 ]

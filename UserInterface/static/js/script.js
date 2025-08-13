@@ -1,5 +1,7 @@
 let enteredPin = ""
 
+// const requester = new Requester();
+
 function press(value) {
 
     if (value == 'clear') {
@@ -57,6 +59,7 @@ function updateClock() {
 
     const formattedTime = `${date} ${month} ${hours}:${minutes}:${seconds}`;
     document.getElementById('time').textContent = formattedTime;
+
 }
 
 updateClock(); 
@@ -102,3 +105,94 @@ document.addEventListener('click', (event) => {
 
 //   updateTimeDifference();
 //   setInterval(updateTimeDifference, 60000);
+
+function capitaliseFirstLetter(val) {
+    return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+}
+
+// Returns the time in HH:MM format
+function getCurrentTime() {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
+}
+
+function getTimeDifferenceHHMM(time1, time2) {
+  const [h1, m1] = time1.split(':').map(Number);
+  const [h2, m2] = time2.split(':').map(Number);
+
+  const minutes1 = h1 * 60 + m1;
+  const minutes2 = h2 * 60 + m2;
+
+  let diff = Math.abs(minutes1 - minutes2);
+  diff = Math.min(diff, 1440 - diff); // Handle day wrap-around
+
+  const diffHours = Math.floor(diff / 60).toString().padStart(2, '0');
+  const diffMinutes = (diff % 60).toString().padStart(2, '0');
+
+  return [diffHours, diffMinutes];
+}
+
+
+document.addEventListener('DOMContentLoaded', async ()=>{
+    let currentSchedule = await fetch(`http://127.0.0.1:5000/api/get/schedule`)
+            .then(response => {
+                if (!response.ok) {
+                    console.error(`Couldn't load data schedule: Network response was not ok`);
+                }
+                return response.json();
+            })
+            .then(data => { return data })
+            .catch(console.error)
+
+    const schedule_div = document.getElementById('schedule-div')
+    const notification_div = document.getElementById('notification-div')
+
+    const ul = document.createElement("ul");
+
+    currentSchedule.forEach(slot => {
+        slot.pills.forEach( pill => {
+            const li = document.createElement("li");
+            li.textContent = `${slot.time} - ${capitaliseFirstLetter(pill.name)} x${pill.amount} `;
+            ul.appendChild(li);
+            });
+        })
+
+    schedule_div.appendChild(ul);
+
+
+    const noti_ul = document.createElement("ul");
+    setInterval(()=>{
+        noti_ul.innerHTML = "";
+        time = getCurrentTime();
+        [hour, min] = time.split(':')
+        currentSchedule.forEach(slot => {
+            const li = document.createElement("li");
+            [slot_hour, slot_min] = slot.time.split(':')
+            let deltaHours, deltaMins;
+            [deltaHours, deltaMins] = getTimeDifferenceHHMM(slot.time, time)
+            if (slot.time == time) {
+                slot.pills.forEach( pill => {
+                        li.textContent = `Your ${capitaliseFirstLetter(pill.name)} dose is due now.`
+                    })
+            }
+            else if (slot_hour > hour) {
+                if (deltaHours < 2) {
+                    slot.pills.forEach( pill => {
+                        li.textContent = `Your ${capitaliseFirstLetter(pill.name)} dose is due soon (${deltaHours}h ${deltaMins}m remaining)`
+                    })
+                }
+            }
+            else if (slot_hour < hour) {
+                slot.pills.forEach( pill => {
+                    li.textContent = `Your ${capitaliseFirstLetter(pill.name)} dose is overdue! (${deltaHours}h ${deltaMins}m overdue)`
+                })
+                
+            }
+            noti_ul.appendChild(li);
+        })
+        notification_div.appendChild(noti_ul);
+    }, 60000) //60000
+
+})

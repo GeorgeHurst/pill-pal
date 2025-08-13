@@ -75,4 +75,10 @@ def check_passcode():
     else:
         return jsonify({'success': False})
     
+@api.route(DEFAULT_ROUTE+"/remove/pill/<slot_id>", methods=['POST'])
+def remove_from_slot(slot_id):
+    pill_data = dm.load("pills")
+    pill_data[int(slot_id)] = {}
+    dm.save("pills", pill_data)
+    return jsonify({"success": True}), 200
 ##########################################################

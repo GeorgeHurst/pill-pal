@@ -2,6 +2,7 @@ var data;
 let pills, global_schedule;
 const requester = new Requester();
 
+
 // async function main() {
 //     pills = await getDataByType("pills")
 //     global_schedule = await getDataByType("schedule");
@@ -182,27 +183,30 @@ document.addEventListener('DOMContentLoaded', async() => {
         const span = document.getElementById(`pill_span${i}`);
 
         if (removeBtn) {
-            removeBtn.addEventListener('click', () => {
+            removeBtn.addEventListener('click', async() => {
                 console.log(`Clearing slot ${i}`);
                 const clearedData = {};
 
-                fetch(`/update_pill_data/${i}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(clearedData)
-                })
-                .then(response => response.json())
-                .then(result => {
-                    if (result.success) {
-                        // loadData();
-                        console.log(`Slot ${i} cleared successfully`);
-                    } else {
-                        console.error("Remove failed:", result.error);
-                    }
-                })
-                .catch(err => console.error("Network error:", err));
+                // fetch(`/update_pill_data/${i}`, {
+                //     method: 'POST',
+                //     headers: {
+                //         'Content-Type': 'application/json'
+                //     },
+                //     body: JSON.stringify(clearedData)
+                // })
+                // .then(response => response.json())
+                // .then(result => {
+                //     if (result.success) {
+                //         // loadData();
+                //         console.log(`Slot ${i} cleared successfully`);
+                //     } else {
+                //         console.error("Remove failed:", result.error);
+                //     }
+                // })
+                // .catch(err => console.error("Network error:", err));
+
+                await requester.removePill(i)
+                await fillSlots()
             });
         }
     }

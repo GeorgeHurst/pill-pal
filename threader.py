@@ -1,7 +1,6 @@
 import threading
 import subprocess
 
-
 def f1():
     subprocess.run(["python", "-m", "ServerManagers.pharmacistmanager"])
 

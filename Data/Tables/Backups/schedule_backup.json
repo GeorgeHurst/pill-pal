@@ -4,11 +4,39 @@
         "pills": [
             {
                 "name": "paracetamol",
-                "amount": "11"
+                "amount": "1"
             },
             {
-                "name": "piriton",
-                "amount": "11"
+                "name": "fexofenadine",
+                "amount": "1"
+            },
+            {
+                "name": "Ibroprofen",
+                "amount": "2"
+            },
+            {
+                "name": "ramipril",
+                "amount": "1"
+            }
+        ],
+        "taken": false
+    },
+    {
+        "time": "13:30",
+        "pills": [
+            {
+                "name": "Ibroprofen",
+                "amount": "2"
+            }
+        ],
+        "taken": false
+    },
+    {
+        "time": "17:30",
+        "pills": [
+            {
+                "name": "Ibroprofen",
+                "amount": "2"
             }
         ],
         "taken": false

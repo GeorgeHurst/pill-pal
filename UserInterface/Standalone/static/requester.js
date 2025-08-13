@@ -59,5 +59,17 @@ class Requester {
         .catch(console.error)
     }
 
+    async removePill(slot) {
+        if (!slot) return
+        return fetch(this.api + `/remove/pill/${slot}`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => { return response.json(); })
+    }
+
     /***************************************/
 }
