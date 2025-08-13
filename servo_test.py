@@ -1,3 +1,6 @@
+import os, sys
+sys.path.append(os.path.abspath('venv/lib/python3.11/site-packages'))
+
 from adafruit_motor import servo
 from adafruit_pca9685 import PCA9685
 import board
@@ -18,14 +21,19 @@ servos = [
     servo.Servo(PCA.channels[3], min_pulse=500, max_pulse=2500)
 ]
 
-for i in range(10):
+# for i in range(10):
+#     for servo in servos:
+#         servo.angle = 0
+#         time.sleep(1)
+#         servo.angle = 90
+#         time.sleep(1)
+#         servo.angle = 180
+#         time.sleep(1)
+#         servo.angle = 0
+#         time.sleep(1)
+
+for i in range(180):
     for servo in servos:
-        servo.angle = 0
-        time.sleep(1)
-        servo.angle = 90
-        time.sleep(1)
-        servo.angle = 180
-        time.sleep(1)
-        servo.angle = 0
-        time.sleep(1)
+        servo.angle = i
+        time.sleep(0.5)
         
