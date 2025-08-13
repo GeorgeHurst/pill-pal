@@ -32,8 +32,10 @@ servos = [
 #         servo.angle = 0
 #         time.sleep(1)
 
-for i in range(180):
-    for servo in servos:
-        servo.angle = i
+for i in range(3):
+    for i in range(180):
+        for servo in servos:
+            servo.angle = i
         time.sleep(0.5)
+
         
