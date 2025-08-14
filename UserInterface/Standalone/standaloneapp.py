@@ -11,3 +11,7 @@ def go_to_standalone():
 @app.route('/edit_pill/slot_<slot_id>')
 def edit_pill(slot_id):
     return render_template('edit_pill.html', slot_id=(int(slot_id)-1))
+
+@app.route('/settings')
+def go_to_settings():
+    return render_template('settings.html')

@@ -135,9 +135,12 @@ function getTimeDifferenceHHMM(time1, time2) {
 }
 
 
+
+
+
 document.addEventListener('DOMContentLoaded', async ()=>{
     let currentSchedule = await fetch(`http://127.0.0.1:5000/api/get/schedule`)
-            .then(response => {
+    .then(response => {
                 if (!response.ok) {
                     console.error(`Couldn't load data schedule: Network response was not ok`);
                 }
@@ -145,54 +148,72 @@ document.addEventListener('DOMContentLoaded', async ()=>{
             })
             .then(data => { return data })
             .catch(console.error)
+            
+            const schedule_div = document.getElementById('schedule-div')
+            const notification_div = document.getElementById('notification-div')
 
-    const schedule_div = document.getElementById('schedule-div')
-    const notification_div = document.getElementById('notification-div')
+            const ul = document.createElement("ul");
+            
+            let prevTime = "";
 
-    const ul = document.createElement("ul");
-
-    currentSchedule.forEach(slot => {
-        slot.pills.forEach( pill => {
-            const li = document.createElement("li");
-            li.textContent = `${slot.time} - ${capitaliseFirstLetter(pill.name)} x${pill.amount} `;
-            ul.appendChild(li);
+            currentSchedule.forEach(slot => {
+                slot.pills.forEach( pill => {
+                    const li = document.createElement("li");
+                    if (slot.time === prevTime) {
+                        li.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + `- ${capitaliseFirstLetter(pill.name)} x${pill.amount} `;
+                    }
+                    else {
+                        li.innerHTML = `${slot.time} - ${capitaliseFirstLetter(pill.name)} x${pill.amount} `;
+                    }
+                    ul.appendChild(li);
+                    prevTime = slot.time
             });
         })
 
-    schedule_div.appendChild(ul);
+        schedule_div.appendChild(ul);
+        
+        
+        const noti_ul = document.createElement("ul");
 
-
-    const noti_ul = document.createElement("ul");
-    setInterval(()=>{
-        noti_ul.innerHTML = "";
-        time = getCurrentTime();
-        [hour, min] = time.split(':')
-        currentSchedule.forEach(slot => {
-            const li = document.createElement("li");
-            [slot_hour, slot_min] = slot.time.split(':')
-            let deltaHours, deltaMins;
-            [deltaHours, deltaMins] = getTimeDifferenceHHMM(slot.time, time)
-            if (slot.time == time) {
-                slot.pills.forEach( pill => {
-                        li.textContent = `Your ${capitaliseFirstLetter(pill.name)} dose is due now.`
-                    })
-            }
-            else if (slot_hour > hour) {
-                if (deltaHours < 2) {
-                    slot.pills.forEach( pill => {
-                        li.textContent = `Your ${capitaliseFirstLetter(pill.name)} dose is due soon (${deltaHours}h ${deltaMins}m remaining)`
-                    })
+        function updateNotifications() {
+            noti_ul.innerHTML = "";
+            const time = getCurrentTime();
+            const [hour, min] = time.split(':');
+        
+            currentSchedule.forEach(slot => {
+                const [slot_hour, slot_min] = slot.time.split(':');
+                const [deltaHours, deltaMins] = getTimeDifferenceHHMM(slot.time, time);
+        
+                let message = ""; let colour = "";
+        
+                if (slot.time === time) {
+                    message = `Your ${slot.time} dose is due now.<button class="noti-btn">CLEAR</button>`;
+                    colour = "#34C759"
+                } 
+                else if (slot_hour > hour) {
+                    if (deltaHours < 2) {
+                        message = `Your ${slot.time} dose is due soon.<button class="noti-btn">CLEAR</button><br>(${deltaHours}h ${deltaMins}m remaining)`;
+                        colour = "#FFC107"
+                    }
+                } 
+                else if (slot_hour < hour) {
+                    message = `Your ${slot.time} dose is overdue!<button class="noti-btn">CLEAR</button><br>(${deltaHours}h ${deltaMins}m overdue)`;
+                    colour = "#CC0000"
                 }
-            }
-            else if (slot_hour < hour) {
-                slot.pills.forEach( pill => {
-                    li.textContent = `Your ${capitaliseFirstLetter(pill.name)} dose is overdue! (${deltaHours}h ${deltaMins}m overdue)`
-                })
-                
-            }
-            noti_ul.appendChild(li);
-        })
-        notification_div.appendChild(noti_ul);
-    }, 60000) //60000
-
-})
+        
+                if (message) {
+                    const li = document.createElement("li");
+                    li.innerHTML = message;
+                    li.style.color = colour
+                    noti_ul.appendChild(li);
+                }
+            });
+        
+            notification_div.appendChild(noti_ul);
+        }
+        
+        updateNotifications()
+        setInterval(updateNotifications, 60000); // 60000
+        
+        
+    })

@@ -53,6 +53,13 @@ class DataManager:
         with open(_file, 'r') as f:
             return f.read()
         
+    # set new passcode
+    def set_passcodehash(self, hashed_code):
+        _file = "Data/passcode.txt"
+        
+        with open(_file, 'w') as f:
+            return f.write(hashed_code)
+        
         
     def get_config(self):
         _file = "Data/config.json"

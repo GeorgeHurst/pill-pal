@@ -1,0 +1,8 @@
+body {
+    font-family: monospace;
+    background-color: bisque;
+}
+
+.title, h2 {
+    text-decoration: underline;
+}

@@ -3,19 +3,19 @@
         "time": "09:30",
         "pills": [
             {
-                "name": "paracetamol",
+                "name": "Paracetamol",
                 "amount": "1"
             },
             {
-                "name": "fexofenadine",
-                "amount": "1"
-            },
-            {
-                "name": "Ibroprofen",
+                "name": "Fexofenadine",
                 "amount": "2"
             },
             {
-                "name": "ramipril",
+                "name": "Ibroprofin",
+                "amount": "1"
+            },
+            {
+                "name": "Medicine4",
                 "amount": "1"
             }
         ],
@@ -25,8 +25,22 @@
         "time": "13:30",
         "pills": [
             {
-                "name": "Ibroprofen",
+                "name": "Fexofenadine",
                 "amount": "2"
+            }
+        ],
+        "taken": false
+    },
+    {
+        "time": "15:30",
+        "pills": [
+            {
+                "name": "Paracetamol",
+                "amount": "1"
+            },
+            {
+                "name": "Ibroprofin",
+                "amount": "1"
             }
         ],
         "taken": false
@@ -35,8 +49,26 @@
         "time": "17:30",
         "pills": [
             {
-                "name": "Ibroprofen",
+                "name": "Fexofenadine",
                 "amount": "2"
+            }
+        ],
+        "taken": false
+    },
+    {
+        "time": "21:30",
+        "pills": [
+            {
+                "name": "Paracetamol",
+                "amount": "1"
+            },
+            {
+                "name": "Fexofenadine",
+                "amount": "2"
+            },
+            {
+                "name": "Ibroprofin",
+                "amount": "1"
             }
         ],
         "taken": false

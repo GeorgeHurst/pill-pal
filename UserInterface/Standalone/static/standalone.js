@@ -78,7 +78,7 @@ async function generateSchedule() {
 
     // Group doses within timeThreshold minutes
     const groupedSchedule = [];
-    const timeThreshold = 10;
+    const timeThreshold = 10; //minutes
 
     for (const dose of allDoses) {
         const lastGroup = groupedSchedule[groupedSchedule.length - 1];
@@ -102,11 +102,12 @@ async function generateSchedule() {
         }
     }
 
-    schedule = groupedSchedule.map(entry => ({
+    let schedule = groupedSchedule.map(entry => ({
         time: toTimeString(entry.time),
         pills: entry.pills,
         taken: entry.taken
     }))
+
 
     await requester.saveDataByType("schedule", schedule)
     await requester.saveDataByType("failed_schedule", skippedPills)
@@ -147,6 +148,7 @@ document.addEventListener('DOMContentLoaded', async() => {
 
     const editBtn = document.getElementById('edit_btn');
     const pillDiv = document.getElementById('pill_div');
+    const settingsBtn = document.getElementById('settings_btn')
 
     editBtn.addEventListener('click', () => {
         pillDiv.classList.toggle('editing');
@@ -154,8 +156,9 @@ document.addEventListener('DOMContentLoaded', async() => {
         
     });
 
-    // loadData();
-    // fillSlots(data);
+    settingsBtn.addEventListener('click', () => {
+        window.location = "/settings" 
+    });
 
     
 
@@ -185,25 +188,6 @@ document.addEventListener('DOMContentLoaded', async() => {
         if (removeBtn) {
             removeBtn.addEventListener('click', async() => {
                 console.log(`Clearing slot ${i}`);
-                const clearedData = {};
-
-                // fetch(`/update_pill_data/${i}`, {
-                //     method: 'POST',
-                //     headers: {
-                //         'Content-Type': 'application/json'
-                //     },
-                //     body: JSON.stringify(clearedData)
-                // })
-                // .then(response => response.json())
-                // .then(result => {
-                //     if (result.success) {
-                //         // loadData();
-                //         console.log(`Slot ${i} cleared successfully`);
-                //     } else {
-                //         console.error("Remove failed:", result.error);
-                //     }
-                // })
-                // .catch(err => console.error("Network error:", err));
 
                 await requester.removePill(i)
                 await fillSlots()
@@ -216,7 +200,7 @@ document.addEventListener('DOMContentLoaded', async() => {
             const scheduleDiv = document.getElementById('schedule_div');
             
             // Clear existing schedule
-            scheduleDiv.innerHTML = '<h2>Schedule</h2><button id="update_schedule_btn" class="button">UPDATE</button><div class="table_wrapper"><table class="schedule_table"><thead><tr><th>Time</th><th>Pills</th></tr></thead><tbody></tbody></table></div>';
+            scheduleDiv.innerHTML = '<h2>Schedule</h2><button id="update_schedule_btn" class="button">UPDATE</button><div class="table_wrapper"><table class="schedule_table"><thead><tr><th>Time</th><th>Pills (Amount)</th></tr></thead><tbody></tbody></table></div>';
             
             const tbody = scheduleDiv.querySelector('tbody');
             
@@ -225,7 +209,7 @@ document.addEventListener('DOMContentLoaded', async() => {
             // Populate new schedule
             schedule.schedule.forEach(entry => {
                 const row = document.createElement('tr');
-                row.innerHTML = `<td>${entry.time}</td><td>${entry.pills.map(p => `${capitaliseFirstLetter(p.name)} (${p.amount})`).join(', ')}</td>`;
+                row.innerHTML = `<td>${entry.time}</td><td>${entry.pills.map(p => `${capitaliseFirstLetter(p.name)} (${p.amount})`).join(',<br>')}</td>`;
                 tbody.appendChild(row);
             });
 

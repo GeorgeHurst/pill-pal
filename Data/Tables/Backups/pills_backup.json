@@ -1,24 +1,30 @@
 [
     {
         "dosePerPill": "200",
-        "dosesPerDay": "1",
-        "minHoursBetweenDoses": "13",
-        "name": "paracetamol",
-        "pillsPerDose": "1"
-    },
-    {
-        "dosePerPill": "200",
-        "dosesPerDay": "1",
-        "minHoursBetweenDoses": "13",
-        "name": "fexofenadine",
+        "dosesPerDay": "3",
+        "minHoursBetweenDoses": "6",
+        "name": "Paracetamol",
         "pillsPerDose": "1"
     },
     {
         "dosePerPill": "250",
-        "dosesPerDay": "3",
+        "dosesPerDay": "4",
         "minHoursBetweenDoses": "4",
-        "name": "Ibroprofen",
+        "name": "Fexofenadine",
         "pillsPerDose": "2"
     },
-    {}
+    {
+        "dosePerPill": "100",
+        "dosesPerDay": "3",
+        "minHoursBetweenDoses": "6",
+        "name": "Ibroprofin",
+        "pillsPerDose": "1"
+    },
+    {
+        "dosePerPill": "1",
+        "dosesPerDay": "12",
+        "minHoursBetweenDoses": "1",
+        "name": "Medicine4",
+        "pillsPerDose": "1"
+    }
 ]
