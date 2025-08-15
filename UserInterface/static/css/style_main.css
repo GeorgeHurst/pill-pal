@@ -83,7 +83,7 @@ body {
     width: 460px;
 }
 div {
-    background-color: aliceblue;
+    /* background-color: aliceblue; */
     border-radius: 8px;
 }
 
@@ -97,6 +97,7 @@ div {
 #notification-div {
     padding-top: 0px;
     margin-top: 0px;
+    overflow-y: auto;
 }
 
 .noti-btn {

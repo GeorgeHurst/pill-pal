@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', async ()=>{
                     }
                     ul.appendChild(li);
                     prevTime = slot.time
-            });
+                });
         })
 
         schedule_div.appendChild(ul);
@@ -181,25 +181,35 @@ document.addEventListener('DOMContentLoaded', async ()=>{
             const [hour, min] = time.split(':');
         
             currentSchedule.forEach(slot => {
+
+                
                 const [slot_hour, slot_min] = slot.time.split(':');
+
+                // Added to handle leading zeros
+                const [calc_slot_hour, calc_slot_min] = [slot_hour.startsWith('0') ? slot_hour.slice(1) : slot_hour, slot_min.startsWith('0') ? slot_min.slice(1) : slot_min];
+                const [calc_hour, calc_min] = [hour.startsWith('0') ? hour.slice(1) : hour, min.startsWith('0') ? min.slice(1) : min];
+
                 const [deltaHours, deltaMins] = getTimeDifferenceHHMM(slot.time, time);
-        
+                
                 let message = ""; let colour = "";
-        
+                
+                console.log(calc_slot_hour == calc_hour)
+
                 if (slot.time === time) {
                     message = `Your ${slot.time} dose is due now.<button class="noti-btn">CLEAR</button>`;
                     colour = "#34C759"
                 } 
-                else if (slot_hour > hour) {
+                else if (calc_slot_hour > calc_hour) {
                     if (deltaHours < 2) {
                         message = `Your ${slot.time} dose is due soon.<button class="noti-btn">CLEAR</button><br>(${deltaHours}h ${deltaMins}m remaining)`;
                         colour = "#FFC107"
                     }
                 } 
-                else if (slot_hour < hour) {
+                else if (calc_slot_hour < calc_hour) {
                     message = `Your ${slot.time} dose is overdue!<button class="noti-btn">CLEAR</button><br>(${deltaHours}h ${deltaMins}m overdue)`;
                     colour = "#CC0000"
                 }
+                
         
                 if (message) {
                     const li = document.createElement("li");
