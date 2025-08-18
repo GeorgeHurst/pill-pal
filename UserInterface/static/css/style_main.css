@@ -38,6 +38,7 @@ li, p {
     display: flex;
     flex-direction: column;
     transition: left 0.3s ease;
+    z-index: 1000;
 }
 
 #sidePane a {
@@ -46,7 +47,7 @@ li, p {
     text-decoration: none;    
     color: rgb(0, 162, 211);          
     font-weight: bold;
-    font-size: 50px;
+    font-size: 30px;
 
 }
 
@@ -88,23 +89,67 @@ div {
 }
 
 #schedule-div ul {
-    overflow-y: auto;
     list-style-type: none;
-    padding: 0;
+    padding: 0px;
     margin-left: 20px;
+}
+
+#schedule-div {
+    position: fixed;
+    top: 500px;
+    overflow-y: auto;
+    height: 300px;
+}
+
+h1 {
+    padding-bottom: 0px;
+    margin-bottom: 0px;
 }
 
 #notification-div {
     padding-top: 0px;
     margin-top: 0px;
+    height: 300px;
     overflow-y: auto;
 }
 
-.noti-btn {
+.noti-btn,
+#backbutton {
     margin-left: 18px;
     border-radius: 10px;
     height: 40px;
     background-color: aliceblue;
     border: 1px solid aliceblue;
     background-color: rgb(0, 162, 211);
+    font-weight: bold;
+    font-size: large;
 }
+
+#reset-noti-btn {
+    position: fixed;
+    bottom: 0px;
+    margin-left: 0px;
+    align-items: center;
+    width: 300px;
+    height: 40px;
+    background-color: aliceblue;
+    border: 1px solid rgb(250, 76, 76);
+    background-color: rgb(250, 76, 76);
+    font-weight: bold;
+    font-size: large;
+}
+
+#reset-noti-btn:active {
+    background-color: rgb(194, 59, 59);
+    border: 1px solid rgb(194, 59, 59);
+}
+
+#pill-ul {
+    margin-left: 0px;
+    padding-left: 0px;
+}
+
+#backbutton {
+    margin-left: 0px;
+}
+

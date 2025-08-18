@@ -167,8 +167,12 @@ document.addEventListener('DOMContentLoaded', async() => {
         btn.addEventListener('click', async () => {
             const pills = await requester.getDataByType('pills');
             let id = parseInt(btn.id[btn.id.length - 1]);
-            console.log(pills[id]);
-            alert(`Pill Name: ${capitaliseFirstLetter(pills[id].name)}\nDose per pill: ${pills[id].dosePerPill}mg\nPills per dose: ${pills[id].pillsPerDose}\nDoses per day: ${pills[id].dosesPerDay}\nMin time between doses: ${pills[id].minHoursBetweenDoses}hrs`);
+            if (!(pills[id].name == undefined)) {
+                alert(`Pill Name: ${capitaliseFirstLetter(pills[id].name)}\nDose per pill: ${pills[id].dosePerPill}mg\nPills per dose: ${pills[id].pillsPerDose}\nDoses per day: ${pills[id].dosesPerDay}\nMin time between doses: ${pills[id].minHoursBetweenDoses} hrs`);
+            }
+            else {
+                alert("Please fill this slot to view its information!")
+            }
         });
     });
 

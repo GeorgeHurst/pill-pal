@@ -128,8 +128,8 @@ function getTimeDifferenceHHMM(time1, time2) {
   let diff = Math.abs(minutes1 - minutes2);
   diff = Math.min(diff, 1440 - diff); // Handle day wrap-around
 
-  const diffHours = Math.floor(diff / 60).toString().padStart(2, '0');
-  const diffMinutes = (diff % 60).toString().padStart(2, '0');
+  const diffHours = Math.floor(diff / 60)
+  const diffMinutes = (diff % 60)
 
   return [diffHours, diffMinutes];
 }
@@ -173,57 +173,114 @@ document.addEventListener('DOMContentLoaded', async ()=>{
         schedule_div.appendChild(ul);
         
         
-        const noti_ul = document.createElement("ul");
+    const noti_ul = document.createElement("ul");
+    const clearedNotifications = new Set();
 
-        function updateNotifications() {
-            noti_ul.innerHTML = "";
-            const time = getCurrentTime();
-            const [hour, min] = time.split(':');
-        
-            currentSchedule.forEach(slot => {
+    let currentDay = new Date().toDateString(); 
 
-                
-                const [slot_hour, slot_min] = slot.time.split(':');
+    noti_ul.addEventListener("click", (event) => {
+    if (event.target.classList.contains("noti-btn")) {
+        const li = event.target.closest("li");
+        const timeKey = li.getAttribute("data-time");
+        clearedNotifications.add(timeKey);
+        li.remove();
+    }
+    });
 
-                // Added to handle leading zeros
-                const [calc_slot_hour, calc_slot_min] = [slot_hour.startsWith('0') ? slot_hour.slice(1) : slot_hour, slot_min.startsWith('0') ? slot_min.slice(1) : slot_min];
-                const [calc_hour, calc_min] = [hour.startsWith('0') ? hour.slice(1) : hour, min.startsWith('0') ? min.slice(1) : min];
-
-                const [deltaHours, deltaMins] = getTimeDifferenceHHMM(slot.time, time);
-                
-                let message = ""; let colour = "";
-                
-                console.log(calc_slot_hour == calc_hour)
-
-                if (slot.time === time) {
-                    message = `Your ${slot.time} dose is due now.<button class="noti-btn">CLEAR</button>`;
-                    colour = "#34C759"
-                } 
-                else if (calc_slot_hour > calc_hour) {
-                    if (deltaHours < 2) {
-                        message = `Your ${slot.time} dose is due soon.<button class="noti-btn">CLEAR</button><br>(${deltaHours}h ${deltaMins}m remaining)`;
-                        colour = "#FFC107"
-                    }
-                } 
-                else if (calc_slot_hour < calc_hour) {
-                    message = `Your ${slot.time} dose is overdue!<button class="noti-btn">CLEAR</button><br>(${deltaHours}h ${deltaMins}m overdue)`;
-                    colour = "#CC0000"
-                }
-                
-        
-                if (message) {
-                    const li = document.createElement("li");
-                    li.innerHTML = message;
-                    li.style.color = colour
-                    noti_ul.appendChild(li);
-                }
-            });
-        
-            notification_div.appendChild(noti_ul);
-        }
-        
-        updateNotifications()
-        setInterval(updateNotifications, 60000); // 60000
-        
-        
+    const reset_notiBtn = document.getElementById('reset-noti-btn')
+    reset_notiBtn.addEventListener('click', ()=>{
+        clearedNotifications.clear();
+        updateNotifications();
     })
+
+    const DUE_SOON_MIN = 120;
+    const DUE_GRACE_MIN = 5;
+
+    const toMinutes = (hhmm) => {
+    const [h, m] = hhmm.split(':').map(n => parseInt(n, 10));
+    return h * 60 + m;
+    };
+    const hmFromMinutes = (minsAbs) => {
+    const h = Math.floor(minsAbs / 60);
+    const m = minsAbs % 60;
+    return [h, m];
+    };
+
+    function updateNotifications() {
+    const today = new Date().toDateString();
+
+    if (today !== currentDay) {
+        clearedNotifications.clear();
+        noti_ul.innerHTML = "";
+        currentDay = today;
+    }
+
+    noti_ul.innerHTML = "";
+
+    const nowStr = getCurrentTime();
+    // const nowStr = "15:36";
+
+    const nowMin = toMinutes(nowStr);
+
+    currentSchedule.forEach(slot => {
+        if (clearedNotifications.has(slot.time)) return;
+
+        const slotMin = toMinutes(slot.time);
+        const diff = slotMin - nowMin;
+
+        let message = "";
+        let colour  = "";
+
+        //        V                        V    REMOVED = SIGN
+        if (diff >= -DUE_GRACE_MIN && diff <= 0) {
+            const minsUntilOverdue = DUE_GRACE_MIN + diff;
+            message = `Your ${slot.time} dose is due now. <button class="noti-btn">CLEAR</button><br>(${minsUntilOverdue}m until overdue)`;
+            colour = "#34C759";
+        } else if (diff > 0 && diff <= DUE_SOON_MIN) {
+            const [h, m] = hmFromMinutes(diff);
+            message = `Your ${slot.time} dose is due soon. <button class="noti-btn">CLEAR</button><br>(${h}h ${m}m remaining)`;
+            colour = "#FFC107";
+        } else if (diff < -DUE_GRACE_MIN) {
+            const [h, m] = hmFromMinutes(-diff);
+            message = `Your ${slot.time} dose is overdue! <button class="noti-btn">CLEAR</button><br>(${h}h ${m}m overdue)`;
+            colour = "#CC0000";
+        } else {
+            return
+        }
+
+        const li = document.createElement("li");
+        li.setAttribute("data-time", slot.time);
+        li.innerHTML = message;
+        li.style.color = colour;
+        noti_ul.appendChild(li);
+    });
+
+    notification_div.appendChild(noti_ul);
+}
+
+
+        
+    function startNotificationLoop() {
+
+        updateNotifications();
+
+
+        const now = new Date();
+        const msUntilNextMinute = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
+
+
+        setTimeout(() => {
+            updateNotifications();
+
+
+            setInterval(updateNotifications, 60000);
+
+        }, msUntilNextMinute);
+    }
+
+    startNotificationLoop();
+        
+        
+    
+})
+

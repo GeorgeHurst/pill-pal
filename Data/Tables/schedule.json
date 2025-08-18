@@ -11,12 +11,12 @@
                 "amount": "2"
             },
             {
-                "name": "Ibroprofin",
+                "name": "Ibroprofen",
                 "amount": "1"
             },
             {
                 "name": "Medicine4",
-                "amount": "1"
+                "amount": "5"
             }
         ],
         "taken": false
@@ -39,8 +39,12 @@
                 "amount": "1"
             },
             {
-                "name": "Ibroprofin",
+                "name": "Ibroprofen",
                 "amount": "1"
+            },
+            {
+                "name": "Medicine4",
+                "amount": "5"
             }
         ],
         "taken": false
@@ -67,8 +71,12 @@
                 "amount": "2"
             },
             {
-                "name": "Ibroprofin",
+                "name": "Ibroprofen",
                 "amount": "1"
+            },
+            {
+                "name": "Medicine4",
+                "amount": "5"
             }
         ],
         "taken": false

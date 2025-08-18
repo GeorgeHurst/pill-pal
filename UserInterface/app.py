@@ -210,9 +210,9 @@ def edit_pill(slot_id):
 def main_page():
     return render_template("main_page.html")
 
-@app.route('/schedule')
-def schedule():
-    return render_template("schedule.html")
+@app.route('/managepills')
+def open_pills():
+    return render_template("managepills.html")
 
 @app.route('/check_passcode', methods=['POST'])
 def check_passcode():

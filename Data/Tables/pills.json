@@ -17,14 +17,14 @@
         "dosePerPill": "100",
         "dosesPerDay": "3",
         "minHoursBetweenDoses": "6",
-        "name": "Ibroprofin",
+        "name": "Ibroprofen",
         "pillsPerDose": "1"
     },
     {
-        "dosePerPill": "1",
-        "dosesPerDay": "1",
-        "minHoursBetweenDoses": "12",
+        "dosePerPill": "1000",
+        "dosesPerDay": "3",
+        "minHoursBetweenDoses": "6",
         "name": "Medicine4",
-        "pillsPerDose": "1"
+        "pillsPerDose": "5"
     }
 ]
