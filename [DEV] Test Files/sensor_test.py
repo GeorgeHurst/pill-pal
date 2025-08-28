@@ -1,5 +1,8 @@
 from gpiozero import Button
 import time
+import os, sys
+
+sys.path.append(os.path.abspath('venv/lib/python3.11/site-packages'))
 
 sensor = Button(19)
 
