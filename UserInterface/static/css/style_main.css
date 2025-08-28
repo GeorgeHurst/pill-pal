@@ -153,3 +153,21 @@ h1 {
     margin-left: 0px;
 }
 
+*::-webkit-scrollbar {
+width: 40px;
+}
+
+*::-webkit-scrollbar-track {
+background: #ddd;
+border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb{
+background: #555;
+border-radius: 10px;
+border: 4px solid #ddd;
+}
+
+*::-webkit-scrollbar-thumb:hover{
+background: #333;
+}
