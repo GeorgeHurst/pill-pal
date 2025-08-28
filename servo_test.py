@@ -21,6 +21,8 @@ servos = [
     servo.Servo(PCA.channels[3], min_pulse=500, max_pulse=2500)
 ]
 
+print("#### START ####")
+
 # for i in range(10):
 #     for servo in servos:
 #         servo.angle = 0
@@ -32,10 +34,26 @@ servos = [
 #         servo.angle = 0
 #         time.sleep(1)
 
-for i in range(3):
-    for i in range(180):
-        for servo in servos:
-            servo.angle = i
-        time.sleep(0.5)
+#for i in range(3):
+#    for i in range(180):
+#        for servo in servos:
+#            servo.angle = i
+#        time.sleep(0.5)
 
-        
+sleep = 0.2
+#for i in range(10):
+#	servos[3].angle = 0 
+#	time.sleep(sleep)
+#	servos[3].angle = 180
+#	time.sleep(sleep)
+
+#0 = closed, 180 = open
+while True:
+	servos[3].angle = 0
+	for i in range(90):
+		servos[3].angle = i*2
+		time.sleep(0.025)
+	time.sleep(0.5)
+	servos[3].angle = 0
+
+print("#### FINISHED ####")
