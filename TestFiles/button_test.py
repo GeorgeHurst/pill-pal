@@ -8,7 +8,7 @@ pin = 0x1A
 button = Button(pin)
 
 while True:
-  if sensor.is_pressed:
+  if button.is_pressed:
     print("    pressed")
   else:
     print("unpressed")
