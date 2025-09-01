@@ -3,10 +3,14 @@ import sys, os
 sys.path.insert(0, "/home/pi/pill-pal/venv/lib/python3.11/site-packages")
 from adafruit_pca9685 import PCA9685
 
+import board
+I2C = board.I2C()
+PCA = PCA9685(I2C)
+PCA.frequency = 50
 
 # sys.path.append(os.path.abspath('venv/lib/python3.11/site-packages'))
 
-buzzer = pca.channels[15]
+buzzer = PCA.channels[15]
 
 button = Button(26)
 led = LED(22)
