@@ -1,4 +1,4 @@
-from gpiozero import Button, LED. Buzzer
+from gpiozero import Button, LED
 import sys, os
 from adafruit_pca9685 import PCA9685
 
