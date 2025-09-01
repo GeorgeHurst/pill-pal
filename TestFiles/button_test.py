@@ -2,7 +2,7 @@ from gpiozero import Button
 
 sys.path.append(os.path.abspath('venv/lib/python3.11/site-packages'))
 
-pin = 0x00011010
+pin = 0x1A
 
 button = Button(pin)
 
