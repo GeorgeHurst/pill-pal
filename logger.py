@@ -1,5 +1,5 @@
 from flask import request
-from colorama import Fore, Style, init
+from colorama import Fore, Style, init, Back
 import inspect
 from datetime import datetime
 
@@ -7,10 +7,17 @@ init(autoreset=True)
 
 
 COLOR_MAP = {
-    'hardwareapi': Fore.RED,
-    'standaloneapi': Fore.GREEN,
-    'pharmacist': Fore.BLUE,
-    'app': Fore.YELLOW
+    'hardwareapi': Back.RED,
+    'standaloneapp': Back.GREEN,
+    'pharmacist': Back.BLUE,
+    'app': Back.YELLOW
+}
+
+NAME_MAP = {
+    'hardwareapi': "HardwareControllerAPI",
+    'standaloneapp': "StandaloneAPP",
+    'pharmacist': "PharmacistAPI",
+    'app': "OnboardApp"
 }
 
 def log(msg):
@@ -21,4 +28,5 @@ def log(msg):
     timestamp = datetime.now().strftime("%H:%M:%S.%f")
 
     color = COLOR_MAP.get(module_name, Fore.WHITE)
-    print(f"{color}[{timestamp}]<{module_name}> {msg}{Style.RESET_ALL}")
+    id = NAME_MAP.get(module_name)
+    print(f"{color}[{timestamp}] <{id}> {msg}{Style.RESET_ALL}")

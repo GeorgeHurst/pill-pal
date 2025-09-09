@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify
 import os, json
 from werkzeug.security import check_password_hash
 from flask_cors import CORS
+from logger import log
 
 app = Flask(__name__)
 CORS(app)
@@ -29,6 +30,7 @@ def login():
 ############### STANDALONE ROUTES ###############
 @app.route('/standalone')
 def go_to_standalone():
+    log("this is a test")
     return render_template('standalone.html')
 
 @app.route('/edit_pill/slot_<slot_id>')

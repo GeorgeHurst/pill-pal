@@ -4,6 +4,7 @@ from werkzeug.security import check_password_hash
 from flask_cors import CORS
 from datetime import datetime
 import os
+from logger import log
 
 dm = DataManager()
 api = Flask(__name__)
@@ -12,8 +13,8 @@ CORS(api)
 DEFAULT_ROUTE = "/api"
 
 
-def log(msg):
-    print("\033[44;37m<PharmacistAPI>", msg, "\033[0m")
+# def log(msg):
+#     print("\033[44;37m<PharmacistAPI>", msg, "\033[0m")
 
 
 
@@ -118,6 +119,6 @@ def request_dispense():
     data = temp  
     # end of temporary  
 
-    log(data)
+    log("This is now dispensing")
     
     return { "success" : True }
