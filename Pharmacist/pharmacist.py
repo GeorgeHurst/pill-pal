@@ -2,12 +2,20 @@ from .DataManager.datamanager import DataManager
 from flask import Flask, request, jsonify
 from werkzeug.security import check_password_hash
 from flask_cors import CORS
+from datetime import datetime
+import os
 
 dm = DataManager()
 api = Flask(__name__)
 CORS(api)
 
 DEFAULT_ROUTE = "/api"
+
+
+def log(msg):
+    print("\033[44;37m<PharmacistAPI>", msg, "\033[0m")
+
+
 
 
 ############### GETTERS ##################################
@@ -82,3 +90,34 @@ def remove_from_slot(slot_id):
     dm.save("pills", pill_data)
     return jsonify({"success": True}), 200
 ##########################################################
+
+
+@api.route(DEFAULT_ROUTE+"/request/dispense", methods=['GET'])
+def request_dispense():
+    data = {}
+    sch = dm.load("schedule")
+    # print("<PharmacistAPI> ",sch)
+    # time = datetime.now().strftime("%H:%M")
+    time = "09:30"
+    for slot in sch:
+        if slot["time"] == time:
+            data = slot["pills"]
+      
+    #temporary  
+    temp = []  
+    for thing in data:
+        match thing["name"]:
+            case "Paracetamol":
+                temp.append("0"+thing["amount"])
+            case "Fexofenadine":
+                temp.append("1"+thing["amount"])
+            case "Ibroprofen":
+                temp.append("2"+thing["amount"])
+            case "Medicine4":
+                temp.append("3"+thing["amount"])
+    data = temp  
+    # end of temporary  
+
+    log(data)
+    
+    return { "success" : True }

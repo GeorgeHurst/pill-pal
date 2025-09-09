@@ -8,7 +8,7 @@ function press(value) {
         document.getElementById('pincode').innerText = "";
         enteredPin = "";
         return;
-    }    
+    }
     else if (value == 'enter') {
 
         if (enteredPin != "") {
@@ -139,6 +139,10 @@ function getTimeDifferenceHHMM(time1, time2) {
 
 
 document.addEventListener('DOMContentLoaded', async ()=>{
+
+document.addEventListener("selectstart", e => e.preventDefault());
+document.addEventListener("dragstart", e => e.preventDefault());
+
     let currentSchedule = await fetch(`http://127.0.0.1:5000/api/get/schedule`)
     .then(response => {
                 if (!response.ok) {
