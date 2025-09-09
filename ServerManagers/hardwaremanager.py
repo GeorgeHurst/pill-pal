@@ -1,4 +1,4 @@
-from HardwareController.hardwarecontroller import *
+from HardwareController.hardwareapi import *
 from .settings import config
 
 if __name__ == "__main__":
