@@ -28,18 +28,18 @@ PCA_CONTROLLER = PCA9685(I2C)
 
 # Buttons
 RELEASE_DOSE = Button(26) # Physical user input to release dose
-button2 = Button(16)
-button3 = Button(12)
-button4 = Button(25)
+# button2 = Button(16)
+# button3 = Button(12)
+# button4 = Button(25)
 
 # Sensors
 SENSORS = [ Button(19). Button(13), Button(6), Button(5) ]
 
 # LEDs
 DOSE_INDICATOR_LED = LED(4) # GREEN
-LATEDOSE_LED = LED(17) # RED
-led3 = LED(27)
-led4 = LED(22)
+LATEDOSE_LED = LED(17)      # RED
+# led3 = LED(27)
+# led4 = LED(22)
 
 # Servos
 SERVOS = [    
@@ -48,3 +48,6 @@ SERVOS = [
     servo.Servo(PCA.channels[2], min_pulse=500, max_pulse=2500),
     servo.Servo(PCA.channels[3], min_pulse=500, max_pulse=2500)
 ]
+
+def dispense(data):
+    # dispense logic
