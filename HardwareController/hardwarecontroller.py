@@ -1,6 +1,6 @@
 import requests
 
-from gpiozero import LED, Button, LineSensor
+from gpiozero import LED, Button
 from adafruit_motor import servo
 from adafruit_pca9685 import PCA9685
 import board

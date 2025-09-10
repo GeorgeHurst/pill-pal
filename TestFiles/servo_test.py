@@ -1,6 +1,8 @@
 import os, sys
-sys.path.append(os.path.abspath('venv/lib/python3.11/site-packages'))
+# sys.path.append(os.path.abspath('venv/lib/python3.11/site-packages'))
+sys.path.insert(0, "/home/pi/pill-pal/venv/lib/python3.11/site-packages")
 
+from gpiozero import LED, Button
 from adafruit_motor import servo
 from adafruit_pca9685 import PCA9685
 import board
@@ -21,18 +23,23 @@ servos = [
     servo.Servo(PCA.channels[3], min_pulse=500, max_pulse=2500)
 ]
 
-print("#### START ####")
+# Buttons
+RELEASE_DOSE = Button(26) # Physical user input to release dose
 
-# for i in range(10):
-#     for servo in servos:
-#         servo.angle = 0
-#         time.sleep(1)
-#         servo.angle = 90
-#         time.sleep(1)
-#         servo.angle = 180
-#         time.sleep(1)
-#         servo.angle = 0
-#         time.sleep(1)
+# Sensors
+SENSORS = [ Button(19), Button(13), Button(6), Button(5) ]
+
+# print("#### START ####")
+
+while not RELEASE_DOSE.is_pressed:
+    pass
+while True:
+	for i in range(4):
+		if SENSORS[i].is_pressed:
+			servos[i].angle = 0
+		else:
+			servos[i].angle = 180
+        
 
 #for i in range(3):
 #    for i in range(180):
@@ -56,4 +63,4 @@ while True:
 	time.sleep(0.5)
 	servos[3].angle = 0
 
-print("#### FINISHED ####")
+# print("#### FINISHED ####")
