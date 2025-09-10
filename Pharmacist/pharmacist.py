@@ -4,7 +4,8 @@ from werkzeug.security import check_password_hash
 from flask_cors import CORS
 from datetime import datetime
 import os, requests
-from logger import log
+from time import sleep
+from logger import log, error
 
 dm = DataManager()
 api = Flask(__name__)
@@ -102,12 +103,15 @@ def request_dispense():
 
     
     log(f"Request sent to HardwareAPI to dispense {time} dose")
+    
     for slot in data:
         dose = slot["id"] + slot["amount"]
         
         requests.get(
             url=f"http://127.0.0.1:5003/hardwarecontroller/api/dispense/{dose}"
         )
+
+        sleep(1)
      
      
     
