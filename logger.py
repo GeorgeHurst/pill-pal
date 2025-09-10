@@ -14,14 +14,13 @@ COLOR_MAP = {
 }
 
 NAME_MAP = {
-    'hardwareapi': "HardwareControllerAPI",
+    'hardwareapi': "HardwareAPI",
     'standaloneapp': "StandaloneAPP",
     'pharmacist': "PharmacistAPI",
     'app': "OnboardApp"
 }
 
 def log(msg):
-    # Get the calling module name
     frame = inspect.stack()[1]
     module = inspect.getmodule(frame[0])
     module_name = module.__name__.split('.')[-1] if module else 'unknown'

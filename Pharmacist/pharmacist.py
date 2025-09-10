@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify
 from werkzeug.security import check_password_hash
 from flask_cors import CORS
 from datetime import datetime
-import os
+import os, requests
 from logger import log
 
 dm = DataManager()
@@ -11,13 +11,6 @@ api = Flask(__name__)
 CORS(api)
 
 DEFAULT_ROUTE = "/api"
-
-
-# def log(msg):
-#     print("\033[44;37m<PharmacistAPI>", msg, "\033[0m")
-
-
-
 
 ############### GETTERS ##################################
 
@@ -52,7 +45,9 @@ def getconfig():
 @api.route(DEFAULT_ROUTE+"/set/<type>", methods=['POST'])
 def setdata(type):
     data = request.get_json()
-    return dm.save(type, data)
+    dm.save(type, data)
+    log(f"Data of type {type} saved.")
+    return {"success" : True}
 
 @api.route(DEFAULT_ROUTE+"/set/pill/<slot>", methods=['POST', 'OPTIONS'])
 def setpill(slot):
@@ -97,28 +92,24 @@ def remove_from_slot(slot_id):
 def request_dispense():
     data = {}
     sch = dm.load("schedule")
-    # print("<PharmacistAPI> ",sch)
+
     # time = datetime.now().strftime("%H:%M")
     time = "09:30"
+    
     for slot in sch:
         if slot["time"] == time:
             data = slot["pills"]
-      
-    #temporary  
-    temp = []  
-    for thing in data:
-        match thing["name"]:
-            case "Paracetamol":
-                temp.append("0"+thing["amount"])
-            case "Fexofenadine":
-                temp.append("1"+thing["amount"])
-            case "Ibroprofen":
-                temp.append("2"+thing["amount"])
-            case "Medicine4":
-                temp.append("3"+thing["amount"])
-    data = temp  
-    # end of temporary  
 
-    log("This is now dispensing")
+    
+    log(f"Request sent to HardwareAPI to dispense {time} dose")
+    for slot in data:
+        dose = slot["id"] + slot["amount"]
+        
+        requests.get(
+            url=f"http://127.0.0.1:5003/hardwarecontroller/api/dispense/{dose}"
+        )
+     
+     
+    
     
     return { "success" : True }

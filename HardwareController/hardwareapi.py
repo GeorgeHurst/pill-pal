@@ -1,5 +1,6 @@
 from flask import Flask, request
-from HardwareController.hardwarecontroller import dispense
+# from HardwareController.hardwarecontroller import dispense
+from logger import log
 
 api = Flask(__name__)
 
@@ -12,12 +13,15 @@ def run(data):
     
     # string[0] = compartment number
     # string[1:] = quantity
+    slot = data[0]
+    amount = data[1:]
     
-    print(f"<HardwareControllerAPI> dispensing {data[1:]} pills in compartment {data[0]}")
+    log(f"Dispensing {amount} pills in compartment {slot}")
     
-    # data = request.get_json()
     # dispense()
     
-    return { "compartment" : data[0],
-             "quantity" : data[1:]
+    log(f"Slot {slot} has finished dispensing")
+    return { 
+            "compartment" : slot,
+            "quantity" : amount
            }

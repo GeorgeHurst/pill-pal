@@ -1,5 +1,6 @@
 [
     {
+        "slotId": "0",
         "dosePerPill": "200",
         "dosesPerDay": "3",
         "minHoursBetweenDoses": "6",
@@ -7,6 +8,7 @@
         "pillsPerDose": "1"
     },
     {
+        "slotId": "1",
         "dosePerPill": "250",
         "dosesPerDay": "4",
         "minHoursBetweenDoses": "4",
@@ -14,6 +16,7 @@
         "pillsPerDose": "2"
     },
     {
+        "slotId": "2",
         "dosePerPill": "100",
         "dosesPerDay": "3",
         "minHoursBetweenDoses": "6",

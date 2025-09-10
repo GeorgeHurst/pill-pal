@@ -3,18 +3,22 @@
         "time": "09:30",
         "pills": [
             {
+                "slot": "0",
                 "name": "Paracetamol",
                 "amount": "1"
             },
             {
+                "slot": "1",
                 "name": "Fexofenadine",
                 "amount": "2"
             },
             {
+                "slot": "2",
                 "name": "Ibroprofen",
                 "amount": "1"
             },
             {
+                "slot": "3",
                 "name": "Medicine4",
                 "amount": "5"
             }
@@ -25,6 +29,7 @@
         "time": "13:30",
         "pills": [
             {
+                "slot": "1",
                 "name": "Fexofenadine",
                 "amount": "2"
             }
@@ -35,14 +40,17 @@
         "time": "15:30",
         "pills": [
             {
+                "slot": "0",
                 "name": "Paracetamol",
                 "amount": "1"
             },
             {
+                "slot": "2",
                 "name": "Ibroprofen",
                 "amount": "1"
             },
             {
+                "slot": "3",
                 "name": "Medicine4",
                 "amount": "5"
             }
@@ -53,6 +61,7 @@
         "time": "17:30",
         "pills": [
             {
+                "slot": "1",
                 "name": "Fexofenadine",
                 "amount": "2"
             }
@@ -63,18 +72,22 @@
         "time": "21:30",
         "pills": [
             {
+                "slot": "0",
                 "name": "Paracetamol",
                 "amount": "1"
             },
             {
+                "slot": "1",
                 "name": "Fexofenadine",
                 "amount": "2"
             },
             {
+                "slot": "2",
                 "name": "Ibroprofen",
                 "amount": "1"
             },
             {
+                "slot": "3",
                 "name": "Medicine4",
                 "amount": "5"
             }
