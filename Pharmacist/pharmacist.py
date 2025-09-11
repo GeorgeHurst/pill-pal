@@ -5,7 +5,7 @@ from flask_cors import CORS
 from datetime import datetime
 import os, requests
 from time import sleep
-from logger import log, error
+from logger import log, error, info
 
 dm = DataManager()
 api = Flask(__name__)
@@ -94,24 +94,33 @@ def request_dispense():
     data = {}
     sch = dm.load("schedule")
 
-    # time = datetime.now().strftime("%H:%M")
-    time = "09:30"
+    time = datetime.now().strftime("%H:%M")
+    # time = "09:30"
     
     for slot in sch:
         if slot["time"] == time:
             data = slot["pills"]
 
+    if data == {}:
+        info("No pills to dispense")
+        return { "failed" : "No pills to dispense"}
     
-    log(f"Request sent to HardwareAPI to dispense {time} dose")
-    
+    dose = ""
     for slot in data:
-        dose = slot["id"] + slot["amount"]
+        if slot["id"] == "3":
+            addon = ""
+        else:
+            addon = "-"
+        dose += slot["id"] + slot["amount"] + addon
         
-        requests.get(
-            url=f"http://127.0.0.1:5003/hardwarecontroller/api/dispense/{dose}"
-        )
+        
+    log(f"Request sent to HardwareAPI to dispense {time} dose. ({dose})")
+    
+    requests.get(
+        url=f"http://127.0.0.1:5003/hardwarecontroller/api/dispense/{dose}"
+    )
 
-        sleep(1)
+    sleep(1)
      
      
     

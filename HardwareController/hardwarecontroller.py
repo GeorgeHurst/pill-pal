@@ -1,10 +1,11 @@
 import requests
 
-from gpiozero import LED, Button
+from gpiozero import LED, Button, Buzzer
 from adafruit_motor import servo
 from adafruit_pca9685 import PCA9685
 import board
-from logger import log
+from logger import log, error, info
+from time import sleep
 
 """
 4x servo motors
@@ -21,17 +22,25 @@ I2C = board.I2C()
 PCA = PCA9685(I2C)
 
 # Buttons
-RELEASE_DOSE = Button(26) # Physical user input to release dose
+BTN = Button(26) # Physical user input to release dose
 # button2 = Button(16)
 # button3 = Button(12)
 # button4 = Button(25)
 
 # Sensors
-SENSORS = [ Button(19), Button(13), Button(6), Button(5) ]
+SENSORS = [ 
+           [ Button(19), Button(23) ],  # Compartment 0
+           [ Button(13), Button(24) ],  # Compartment 1
+           [ Button(6),  Button(25) ],  # Compartment 2
+           [ Button(5),  Button(16) ]   # Compartment 3
+        ]
+
+BUZZER = Buzzer(12)
 
 # LEDs
+BTN_LED = LED(22)
 DOSE_INDICATOR_LED = LED(4) # GREEN
-LATEDOSE_LED = LED(17)      # RED
+# LATEDOSE_LED = LED(17)      # RED
 # led3 = LED(27)
 # led4 = LED(22)
 
@@ -44,38 +53,52 @@ SERVOS = [
 ]
 
 
+# degrees of servo angles
+OPEN_ANGLE = 0 
+CLOSED_ANGLE = 180
 
-class Airlock:
-    def __init__(self, slot):
-        self.slot = slot
-        
-        # degrees of servo angles
-        self.OPEN_ANGLE = 0 
-        self.CLOSED_ANGLE = 180
+class airlock:   
     
-    def open(self):
-        SERVOS[self.slot].angle = self.OPEN_ANGLE
+    @staticmethod
+    def open(slot):
+        SERVOS[slot].angle = OPEN_ANGLE
         log("AIRLOCK OPEN")
     
-    def close(self):
-        SERVOS[self.slot].angle = self.CLOSED_ANGLE
+    @staticmethod
+    def close(slot):
+        SERVOS[slot].angle = CLOSED_ANGLE
         log("AIRLOCK CLOSED")
 
 
 
 # dispense logic
-def dispense(slot, amount):
-    airlock = Airlock(slot)
+def dispense(data):
     
-    for i in range(amount):
-        log(f"Dispensing dose {i+1}/{amount} from slot {slot}")
+    BUZZER.on()
+    BTN_LED.on()
+    
+    while not BTN.is_pressed:
+        sleep(0.1)
         
-        # vibration motor in slot vibrates
-        airlock.open()
-        while not SENSORS[slot].is_pressed:
-            pass
-        airlock.close()
+    BUZZER.off()
+    BTN_LED.off()    
     
-    pass
+    for slot in data:
+        slot_id = slot[0]
+        amount = slot[1:]
+        
+        for i in range(int(amount)):
+            info(f"Dispensing {i}/{amount}")
+            while True:
+                airlock.open(slot=slot_id)
+                while not SENSORS[slot_id][0].is_pressed:
+                    sleep(0.1)
+                airlock.close(slot=slot_id)
+                if SENSORS[slot_id][1].is_pressed:
+                    break
+                else:
+                    error("No pill has passed the second sensor")
+    
+        
     
     

@@ -140,6 +140,24 @@ function getTimeDifferenceHHMM(time1, time2) {
 
 document.addEventListener('DOMContentLoaded', async ()=>{
 
+    async function sendUpdates() {
+        return await fetch(`http://127.0.0.1:5000/api/request/dispense`)
+    }
+
+    sendUpdates();
+
+
+    const now = new Date();
+    const msUntilNextMinute = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
+    
+    setTimeout(() => {
+        sendUpdates();
+
+        setInterval(sendUpdates, 60000);
+
+    }, msUntilNextMinute);
+
+
 document.addEventListener("selectstart", e => e.preventDefault());
 document.addEventListener("dragstart", e => e.preventDefault());
 
@@ -273,9 +291,9 @@ document.addEventListener("dragstart", e => e.preventDefault());
         const msUntilNextMinute = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
 
 
+        
         setTimeout(() => {
             updateNotifications();
-
 
             setInterval(updateNotifications, 60000);
 

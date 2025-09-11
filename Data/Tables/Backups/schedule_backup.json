@@ -3,24 +3,24 @@
         "time": "09:30",
         "pills": [
             {
-                "slot": "0",
+                "id": "0",
                 "name": "Paracetamol",
                 "amount": "1"
             },
             {
-                "slot": "1",
+                "id": "1",
                 "name": "Fexofenadine",
                 "amount": "2"
             },
             {
-                "slot": "2",
+                "id": "2",
                 "name": "Ibroprofen",
                 "amount": "1"
             },
             {
-                "slot": "3",
+                "id": "3",
                 "name": "Medicine4",
-                "amount": "5"
+                "amount": "4"
             }
         ],
         "taken": false
@@ -29,9 +29,20 @@
         "time": "13:30",
         "pills": [
             {
-                "slot": "1",
+                "id": "1",
                 "name": "Fexofenadine",
                 "amount": "2"
+            }
+        ],
+        "taken": false
+    },
+    {
+        "time": "14:30",
+        "pills": [
+            {
+                "id": "3",
+                "name": "Medicine4",
+                "amount": "4"
             }
         ],
         "taken": false
@@ -40,19 +51,14 @@
         "time": "15:30",
         "pills": [
             {
-                "slot": "0",
+                "id": "0",
                 "name": "Paracetamol",
                 "amount": "1"
             },
             {
-                "slot": "2",
+                "id": "2",
                 "name": "Ibroprofen",
                 "amount": "1"
-            },
-            {
-                "slot": "3",
-                "name": "Medicine4",
-                "amount": "5"
             }
         ],
         "taken": false
@@ -61,7 +67,7 @@
         "time": "17:30",
         "pills": [
             {
-                "slot": "1",
+                "id": "1",
                 "name": "Fexofenadine",
                 "amount": "2"
             }
@@ -72,24 +78,19 @@
         "time": "21:30",
         "pills": [
             {
-                "slot": "0",
+                "id": "0",
                 "name": "Paracetamol",
                 "amount": "1"
             },
             {
-                "slot": "1",
+                "id": "1",
                 "name": "Fexofenadine",
                 "amount": "2"
             },
             {
-                "slot": "2",
+                "id": "2",
                 "name": "Ibroprofen",
                 "amount": "1"
-            },
-            {
-                "slot": "3",
-                "name": "Medicine4",
-                "amount": "5"
             }
         ],
         "taken": false

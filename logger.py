@@ -37,3 +37,12 @@ def error(msg):
 
     id = NAME_MAP.get(module_name)
     print(f"{Back.RED}[{timestamp}][ERROR] <{id}> {msg}{Style.RESET_ALL}")
+    
+def info(msg):
+    frame = inspect.stack()[1]
+    module = inspect.getmodule(frame[0])
+    module_name = module.__name__.split('.')[-1] if module else 'unknown'
+    timestamp = datetime.now().strftime("%H:%M:%S.%f")
+
+    id = NAME_MAP.get(module_name)
+    print(f"{Back.CYAN}[{timestamp}][INFO]  <{id}> {msg}{Style.RESET_ALL}")
