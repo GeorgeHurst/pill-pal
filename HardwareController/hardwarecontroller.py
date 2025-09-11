@@ -6,6 +6,7 @@ from adafruit_pca9685 import PCA9685
 import board
 from logger import log, error, info
 from time import sleep
+import sys
 
 
 sys.path.insert(0, "/home/pi/pill-pal/venv/lib/python3.11/site-packages")
@@ -106,3 +107,4 @@ def dispense(data):
     
 
     
+
