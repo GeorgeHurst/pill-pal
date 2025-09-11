@@ -5,6 +5,6 @@ config = {
     "ui_port": 5001,
     "standalone_port": 5002,
     "hardware_port": 5003,
-    "debug": True,
+    "debug": False,
     "host": "0.0.0.0"
 }

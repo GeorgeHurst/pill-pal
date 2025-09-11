@@ -1,5 +1,9 @@
 import threading
 import subprocess
+import sys, os
+
+
+sys.path.insert(0, "/home/pi/pill-pal/venv/lib/python3.11/site-packages")
 
 def f1():
     subprocess.run(["python", "-m", "ServerManagers.pharmacistmanager"])

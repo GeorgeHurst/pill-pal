@@ -20,6 +20,8 @@ sys.path.insert(0, "/home/pi/pill-pal/venv/lib/python3.11/site-packages")
 1x RTC
 """
 
+print("TESTFDIGHDFHGIDHGIU")
+
 I2C = board.I2C()
 
 # PWM Controller
@@ -58,19 +60,19 @@ SERVOS = [
 
 
 # degrees of servo angles
-OPEN_ANGLE = 0 
-CLOSED_ANGLE = 180
+OPEN_ANGLE = 180 
+CLOSED_ANGLE = 0
 
 class airlock:   
     
     @staticmethod
     def open(slot):
-        SERVOS[slot].angle = OPEN_ANGLE
+        SERVOS[int(slot)].angle = OPEN_ANGLE
         log("AIRLOCK OPEN")
     
     @staticmethod
     def close(slot):
-        SERVOS[slot].angle = CLOSED_ANGLE
+        SERVOS[int(slot)].angle = CLOSED_ANGLE
         log("AIRLOCK CLOSED")
 
 
@@ -94,11 +96,12 @@ def dispense(data):
         for i in range(int(amount)):
             info(f"Dispensing {i}/{amount}")
             while True:
-                airlock.open(slot=slot_id)
-                while not SENSORS[slot_id][0].is_pressed:
+#                airlock.open(slot=slot_id)
+                SERVOS[int(slot_id)].angle = 90
+                while not SENSORS[int(slot_id)][0].is_pressed:
                     sleep(0.1)
                 airlock.close(slot=slot_id)
-                if SENSORS[slot_id][1].is_pressed:
+                if SENSORS[int(slot_id)][1].is_pressed:
                     break
                 else:
                     error("No pill has passed the second sensor")
