@@ -7,9 +7,12 @@ import os, requests
 from time import sleep
 from logger import log, error, info
 
+sys.path.insert(0, "/home/pi/pill-pal/venv/lib/python3.11/site-packages")
+
 dm = DataManager()
 api = Flask(__name__)
 CORS(api)
+
 
 DEFAULT_ROUTE = "/api"
 
@@ -125,4 +128,5 @@ def request_dispense():
      
     
     
+
     return { "success" : True }
