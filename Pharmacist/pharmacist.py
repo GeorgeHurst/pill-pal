@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify
 from werkzeug.security import check_password_hash
 from flask_cors import CORS
 from datetime import datetime
-import os, requests
+import os, requests, sys
 from time import sleep
 from logger import log, error, info
 
@@ -130,3 +130,4 @@ def request_dispense():
     
 
     return { "success" : True }
+
