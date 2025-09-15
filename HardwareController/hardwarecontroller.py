@@ -85,10 +85,11 @@ def go(data):
         amount = int(slot[1:])
         
         for i in range(amount):
-            info(f"Dispensing {i}/{amount}")
+            info(f"Dispensing {i+1}/{amount}")
 
             airlock.open(slot_id)
-            SENSOR[slot_id][0].when_pressed = lambda: airlock.close(slot_id)
+            SENSORS[slot_id][0].wait_for_press()
+            airlock.close(slot_id)
 
 
 
@@ -98,8 +99,9 @@ def dispense(data):
     # BUZZER.on()
     BTN_LED.on()
     
-    BTN.when_pressed = lambda: go(data)
-        
     BTN.wait_for_press()
+    go(data)
+
     
+
     
