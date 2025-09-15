@@ -82,9 +82,11 @@ def go(data):
         for i in range(amount):
             print(f"Dispensing {i+1}/{amount}")
 
-            airlock.open(slot_id)
+            # airlock.open(slot_id)
+            SERVOS[slot].angle = OPEN_ANGLE
             SENSORS[slot_id][0].wait_for_press()
-            airlock.close(slot_id)
+            # airlock.close(slot_id)
+            SERVOS[slot].angle = CLOSED_ANGLE
 
 
 
@@ -102,5 +104,6 @@ print("dispense test")
 dispense(["02"])
 print("done")
     
+
 
 
