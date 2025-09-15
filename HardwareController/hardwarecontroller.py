@@ -86,6 +86,7 @@ def go(data):
             # airlock.open(slot_id)
             servo_test.angle = OPEN_ANGLE
             SENSORS[slot_id][0].wait_for_press()
+            SENSORS[slot_id][0].wait_for_release()
             # airlock.close(slot_id)
             servo_test.angle = CLOSED_ANGLE
 
@@ -105,6 +106,7 @@ print("dispense test")
 dispense(["02"])
 print("done")
     
+
 
 
 
