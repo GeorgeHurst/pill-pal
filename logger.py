@@ -45,4 +45,4 @@ def info(msg):
     timestamp = datetime.now().strftime("%H:%M:%S.%f")
 
     id = NAME_MAP.get(module_name)
-    print(f"{Back.CYAN}[{timestamp}][INFO]  <{id}> {msg}{Style.RESET_ALL}")
+    print(f"{Back.LIGHTBLACK_EX}[{timestamp}][INFO]  <{id}> {msg}{Style.RESET_ALL}")
