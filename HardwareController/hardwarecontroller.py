@@ -81,16 +81,16 @@ def go(data):
         slot_id = int(slot[0])
         amount = int(slot[1:])
         
+        airlock.close(slot_id)
         for i in range(amount):
-            airlock.close(slot_id)
             print(f"Dispensing {i+1}/{amount}")
-
             airlock.open(slot_id)
             SENSORS[slot_id][0].wait_for_press()
             airlock.close(slot_id)
             sleep(0.5)
             SENSORS[slot_id][0].wait_for_release()
-    
+    for servo in SERVOS:
+               print(servo)
 
 
 # dispense logic
@@ -107,6 +107,7 @@ print("dispense test")
 dispense(["02"])
 print("done")
     
+
 
 
 
