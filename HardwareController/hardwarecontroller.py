@@ -67,47 +67,39 @@ class airlock:
     
     @staticmethod
     def open(slot):
-        SERVOS[int(slot)].angle = OPEN_ANGLE
+        SERVOS[slot].angle = OPEN_ANGLE
         log("AIRLOCK OPEN")
     
     @staticmethod
     def close(slot):
-        SERVOS[int(slot)].angle = CLOSED_ANGLE
+        SERVOS[slot].angle = CLOSED_ANGLE
         log("AIRLOCK CLOSED")
+
+
+def go(data):
+    # BUZZER.off()
+    BTN_LED.off() 
+
+    for slot in data:
+        slot_id = int(slot[0])
+        amount = int(slot[1:])
+        
+        for i in range(amount):
+            info(f"Dispensing {i}/{amount}")
+
+            airlock.open(slot_id)
+            SENSOR[slot_id][0].when_pressed = lambda: airlock.close(slot_id)
 
 
 
 # dispense logic
 def dispense(data):
     
-    BUZZER.on()
+    # BUZZER.on()
     BTN_LED.on()
     
-    while not BTN.is_pressed:
-        sleep(0.1)
+    BTN.when_pressed = lambda: go(data)
         
-    BUZZER.off()
-    BTN_LED.off()    
+       
     
-    for slot in data:
-        slot_id = slot[0]
-        amount = slot[1:]
-        
-        for i in range(int(amount)):
-            info(f"Dispensing {i}/{amount}")
-            while True:
-#                airlock.open(slot=slot_id)
-                SERVOS[int(slot_id)].angle = 90
-                while not SENSORS[int(slot_id)][0].is_pressed:
-                    sleep(0.1)
-                airlock.close(slot=slot_id)
-                if SENSORS[int(slot_id)][1].is_pressed:
-                    break
-                else:
-                    error("No pill has passed the second sensor")
     
-        
-    
-
-    
-
