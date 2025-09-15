@@ -89,8 +89,8 @@ def go(data):
             airlock.close(slot_id)
             sleep(0.5)
             SENSORS[slot_id][0].wait_for_release()
-    for servo in SERVOS:
-               print(servo)
+    for i in range(4):
+           airlock.close(i)
 
 
 # dispense logic
@@ -107,6 +107,7 @@ print("dispense test")
 dispense(["02"])
 print("done")
     
+
 
 
 
