@@ -88,6 +88,7 @@ def go(data):
             airlock.open(slot_id)
             SENSORS[slot_id][0].wait_for_press()
             airlock.close(slot_id)
+            time.sleep(0.5)
             SENSORS[slot_id][0].wait_for_release()
 
 
@@ -105,6 +106,7 @@ print("dispense test")
 dispense(["02"])
 print("done")
     
+
 
 
 
