@@ -100,6 +100,6 @@ def dispense(data):
     
     BTN.when_pressed = lambda: go(data)
         
-       
+    BTN.wait_for_press()
     
     
