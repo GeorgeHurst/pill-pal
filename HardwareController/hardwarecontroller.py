@@ -53,6 +53,7 @@ SERVOS = [
     servo.Servo(PCA.channels[3], min_pulse=500, max_pulse=2500)
 ]
 
+servo_test = servo.Servo(PCA.channels[8], min_pulse=500, max_pulse=2500)
 
 # degrees of servo angles
 OPEN_ANGLE = 180 
@@ -104,6 +105,7 @@ print("dispense test")
 dispense(["02"])
 print("done")
     
+
 
 
 
