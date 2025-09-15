@@ -102,6 +102,9 @@ def dispense(data):
     BTN.wait_for_press()
     go(data)
 
+
+print("dispense test")
+dispense(["02"])
+print("done")
     
 
-    
