@@ -24,6 +24,7 @@ I2C = board.I2C()
 
 # PWM Controller
 PCA = PCA9685(I2C)
+PCA.frequency = 50
 
 # Buttons
 BTN = Button(26) # Physical user input to release dose
@@ -106,6 +107,7 @@ print("dispense test")
 dispense(["02"])
 print("done")
     
+
 
 
 
