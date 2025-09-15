@@ -4,7 +4,7 @@ from gpiozero import LED, Button, Buzzer
 from adafruit_motor import servo
 from adafruit_pca9685 import PCA9685
 import board
-from logger import log, error, info
+# from logger import log, error, info
 from time import sleep
 import sys
 
@@ -20,8 +20,6 @@ sys.path.insert(0, "/home/pi/pill-pal/venv/lib/python3.11/site-packages")
 1x RTC
 """
 
-print("TESTFDIGHDFHGIDHGIU")
-
 I2C = board.I2C()
 
 # PWM Controller
@@ -29,9 +27,6 @@ PCA = PCA9685(I2C)
 
 # Buttons
 BTN = Button(26) # Physical user input to release dose
-# button2 = Button(16)
-# button3 = Button(12)
-# button4 = Button(25)
 
 # Sensors
 SENSORS = [ 
@@ -68,12 +63,12 @@ class airlock:
     @staticmethod
     def open(slot):
         SERVOS[slot].angle = OPEN_ANGLE
-        log("AIRLOCK OPEN")
+        #log("AIRLOCK OPEN")
     
     @staticmethod
     def close(slot):
         SERVOS[slot].angle = CLOSED_ANGLE
-        log("AIRLOCK CLOSED")
+        #log("AIRLOCK CLOSED")
 
 
 def go(data):
@@ -85,7 +80,7 @@ def go(data):
         amount = int(slot[1:])
         
         for i in range(amount):
-            info(f"Dispensing {i+1}/{amount}")
+            print(f"Dispensing {i+1}/{amount}")
 
             airlock.open(slot_id)
             SENSORS[slot_id][0].wait_for_press()
@@ -107,4 +102,5 @@ print("dispense test")
 dispense(["02"])
 print("done")
     
+
 
