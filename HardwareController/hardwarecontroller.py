@@ -77,6 +77,7 @@ def go(data):
     # BUZZER.off()
     BTN_LED.off() 
 
+    airlock.close(slot_id)
     for slot in data:
         slot_id = int(slot[0])
         amount = int(slot[1:])
@@ -104,6 +105,7 @@ print("dispense test")
 dispense(["02"])
 print("done")
     
+
 
 
 
