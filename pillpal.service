@@ -1,0 +1,28 @@
+[Unit]
+Description=PillPal Auto Startup (AP + Server + Kiosk)
+After=network.target
+Wants=network.target
+
+[Service]
+Type=idle
+User=pi
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/pi/.Xauthority
+
+# Run AP setup first
+ExecStart=/bin/bash /home/pi/setup-ap.sh
+
+# Run threader.py in background
+ExecStartPost=/usr/bin/python3 /home/pi/threader.py &
+
+# Wait for server to respond before starting kiosk
+ExecStartPost=/bin/bash -c 'until curl -s http://127.0.0.1:5001 >/dev/null; do sleep 1; done'
+
+# Start kiosk Chromium
+ExecStartPost=/home/pi/.config/kiosk/start.sh
+
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=graphical.target
