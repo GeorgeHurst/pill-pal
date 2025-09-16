@@ -9,17 +9,15 @@ User=pi
 Environment=DISPLAY=:0
 Environment=XAUTHORITY=/home/pi/.Xauthority
 
-# Run AP setup first
-ExecStart=/bin/bash /home/pi/setup-ap.sh
-
-# Run threader.py in background
-ExecStartPost=/usr/bin/python3 /home/pi/threader.py &
-
-# Wait for server to respond before starting kiosk
-ExecStartPost=/bin/bash -c 'until curl -s http://127.0.0.1:5001 >/dev/null; do sleep 1; done'
-
-# Start kiosk Chromium
-ExecStartPost=/home/pi/.config/kiosk/start.sh
+# Activate your venv and run threader.py in the background
+ExecStart=/bin/bash -c '
+source /home/pi/venv/bin/activate
+/home/pi/setup-ap.sh
+nohup python3 /home/pi/threader.py >/home/pi/threader.log 2>&1 &
+# wait for the server to respond
+until curl -s http://127.0.0.1:5001 >/dev/null; do sleep 1; done
+/home/pi/.config/kiosk/start.sh
+'
 
 Restart=always
 RestartSec=10
