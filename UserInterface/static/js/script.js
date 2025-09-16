@@ -13,7 +13,7 @@ function press(value) {
 
         if (enteredPin != "") {
 
-            fetch('http://127.0.0.1:5000/api/authenticate', {
+            fetch(window.location.origin+'/api/authenticate', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -141,7 +141,7 @@ function getTimeDifferenceHHMM(time1, time2) {
 document.addEventListener('DOMContentLoaded', async ()=>{
 
     async function sendUpdates() {
-        return await fetch(`http://127.0.0.1:5000/api/request/dispense`)
+        return await fetch(window.location.origin+`/api/request/dispense`)
     }
 
     sendUpdates();
@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', async ()=>{
 document.addEventListener("selectstart", e => e.preventDefault());
 document.addEventListener("dragstart", e => e.preventDefault());
 
-    let currentSchedule = await fetch(`http://127.0.0.1:5000/api/get/schedule`)
+    let currentSchedule = await fetch(window.location.origin+`/api/get/schedule`)
     .then(response => {
                 if (!response.ok) {
                     console.error(`Couldn't load data schedule: Network response was not ok`);
