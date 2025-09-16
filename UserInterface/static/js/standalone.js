@@ -141,14 +141,14 @@ async function generateSchedule() {
 }
   
 function loadData() {
-    fetch('http://localhost:5000/load_data/pills')
+    fetch(window.location.origin+'/load_data/pills')
     .then(response => response.json())
     .then(data => {fillSlots(data)});
 }
 
 
 async function loadDataByType(type) {
-    const response = await fetch(`http://localhost:5000/load_data/${type}`);
+    const response = await fetch(window.location.origin+`/load_data/${type}`);
     const data = await response.json();
     return data;
 }
