@@ -4,23 +4,32 @@ After=network.target
 Wants=network.target
 
 [Service]
-Type=idle
+Type=simple
 User=pi
 Environment=DISPLAY=:0
 Environment=XAUTHORITY=/home/pi/.Xauthority
 
-# Activate your venv and run threader.py in the background
+# Wait a few seconds for networking / X to be ready
+ExecStartPre=/bin/sleep 10
+
+# Run everything in one bash command
 ExecStart=/bin/bash -c '
+# 1. Run the AP setup script
+/bin/bash /home/pi/pill-pal/setup-wap.sh
+
+# 2. Activate venv and start threader.py in background
 source /home/pi/venv/bin/activate
-/home/pi/setup-ap.sh
 nohup python3 /home/pi/threader.py >/home/pi/threader.log 2>&1 &
-# wait for the server to respond
+
+# 3. Wait until server is responding
 until curl -s http://127.0.0.1:5001 >/dev/null; do sleep 1; done
-/home/pi/.config/kiosk/start.sh
+
+# 4. Start Chromium kiosk
+/bin/bash /home/pi/pill-pal/start.sh
 '
 
 Restart=always
 RestartSec=10
 
 [Install]
-WantedBy=graphical.target
+WantedBy=multi-user.target
