@@ -22,11 +22,8 @@ document.addEventListener('DOMContentLoaded', async() => {
     dosesPerDayInput.value = data.dosesPerDay;
     minHoursBetweenDosesInput.value = data.minHoursBetweenDoses;
 
-    console.log(slotId)
-
     pillSubmitButton.addEventListener('click', () => {
         newPillData = {
-            "slotId": slotId,
             "dosePerPill": dosePerPillInput.value,
             "dosesPerDay": dosesPerDayInput.value,
             "minHoursBetweenDoses": minHoursBetweenDosesInput.value,

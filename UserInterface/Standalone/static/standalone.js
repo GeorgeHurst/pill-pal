@@ -35,7 +35,6 @@ async function generateSchedule() {
 
     for (const pill of pill_data) {
         const {
-            slotId, // <-- new
             name,
             dosePerPill,
             pillsPerDose,
@@ -66,7 +65,6 @@ async function generateSchedule() {
 
             allDoses.push({
                 time: currentTime,
-                id: slotId,
                 pill: name,
                 amount: pillsPerDose
             });
@@ -93,12 +91,12 @@ async function generateSchedule() {
             if (existing) {
                 existing.amount += dose.amount;
             } else {
-                lastGroup.pills.push({ id: dose.id, name: dose.pill, amount: dose.amount });
+                lastGroup.pills.push({ name: dose.pill, amount: dose.amount });
             }
         } else {
             groupedSchedule.push({
                 time: dose.time,
-                pills: [{ id: dose.id, name: dose.pill, amount: dose.amount }], //<- new
+                pills: [{ name: dose.pill, amount: dose.amount }],
                 taken: false
             });
         }
