@@ -1,6 +1,6 @@
 class Requester {
     constructor() {
-        this.api = "http://localhost:5000";
+        this.api = `${window.location.protocol}//${window.location.hostname}:5000/api`
     }
 
     /*********STANDALONE ENDPOINTS***********/

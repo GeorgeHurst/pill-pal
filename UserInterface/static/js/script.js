@@ -13,7 +13,8 @@ function press(value) {
 
         if (enteredPin != "") {
 
-            fetch('http://127.0.0.1:5000/api/authenticate', {
+            let apiLocation = `${window.location.protocol}//${window.location.hostname}:5000`
+            fetch(apiLocation+'/api/authenticate', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -140,10 +141,34 @@ function getTimeDifferenceHHMM(time1, time2) {
 
 document.addEventListener('DOMContentLoaded', async ()=>{
 
+    async function sendUpdates() {
+        let apiLocation = `${window.location.protocol}//${window.location.hostname}:5000`
+        return await fetch(apiLocation+`/api/request/dispense`)
+    }
+
+    sendUpdates();
+
+    const reload_btn = document.getElementById('reload-btn')
+    reload_btn.addEventListener('click', ()=>{
+        window.location.reload()
+    })
+
+    const now = new Date();
+    const msUntilNextMinute = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
+    
+    setTimeout(() => {
+        sendUpdates();
+
+        setInterval(sendUpdates, 60000);
+
+    }, msUntilNextMinute);
+
+
 document.addEventListener("selectstart", e => e.preventDefault());
 document.addEventListener("dragstart", e => e.preventDefault());
 
-    let currentSchedule = await fetch(`http://127.0.0.1:5000/api/get/schedule`)
+    let apiLocation = `${window.location.protocol}//${window.location.hostname}:5000`
+    let currentSchedule = await fetch(apiLocation+`/api/get/schedule`)
     .then(response => {
                 if (!response.ok) {
                     console.error(`Couldn't load data schedule: Network response was not ok`);
@@ -273,9 +298,9 @@ document.addEventListener("dragstart", e => e.preventDefault());
         const msUntilNextMinute = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
 
 
+        
         setTimeout(() => {
             updateNotifications();
-
 
             setInterval(updateNotifications, 60000);
 
