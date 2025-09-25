@@ -7,6 +7,7 @@ from logger import log
 app = Flask(__name__)
 CORS(app)
 
+app.config["SECRET_KEY"] = os.urandom(32)
 
 with open('Data/passcode.txt', 'r') as file:
     stored_hash = file.read().strip()
@@ -22,7 +23,7 @@ BACKUP_FAILED_SCHEDULE_FILE = 'Data/Tables/Backups/failed_schedule_backup.json'
 
 @app.route('/')
 def login():
-    return render_template('login_page.html')
+    return render_template('main_page.html')
 
 
 

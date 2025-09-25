@@ -1,7 +1,8 @@
 document.addEventListener('DOMContentLoaded', async() => {
     const pill_ul = document.getElementById("pill-ul")
     
-    let pill_data = await fetch(window.location.origin+`/api/get/pills`)
+    let apiLocation = `${window.location.protocol}//${window.location.hostname}:5000`
+    let pill_data = await fetch(apiLocation+`/api/get/pills`)
         .then(response => {
                     if (!response.ok) {
                         console.error(`Couldn't load pills: Network response was not ok`);

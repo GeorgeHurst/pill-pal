@@ -1,7 +1,7 @@
 class Requester {
     constructor() {
         this.config = null
-        this.api = window.location.origin+"/api";
+        this.api = `${window.location.protocol}//${window.location.hostname}:5000/api`
     }
 
     /*********STANDALONE ENDPOINTS***********/
