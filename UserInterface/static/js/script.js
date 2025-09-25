@@ -153,6 +153,12 @@ document.addEventListener('DOMContentLoaded', async ()=>{
         window.location.reload()
     })
 
+    const demo_btn = document.getElementById('demo-btn')
+    let apiLocation50 = `${window.location.protocol}//${window.location.hostname}:5003`
+    demo_btn.addEventListener('click', ()=>{
+        fetch(apiLocation50+'/hardwarecontroller/api/dispense/01-11-21')
+    })
+
     const now = new Date();
     const msUntilNextMinute = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
     
